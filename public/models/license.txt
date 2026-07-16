@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wireframe 3D Globe
+* source:	https://sketchfab.com/3d-models/wireframe-3d-globe-20adb20e73ee4b68bc1207e1675b8891
+* author:	Ep Digital Design (https://sketchfab.com/Epdigitaldesign)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wireframe 3D Globe" (https://sketchfab.com/3d-models/wireframe-3d-globe-20adb20e73ee4b68bc1207e1675b8891) by Ep Digital Design (https://sketchfab.com/Epdigitaldesign) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

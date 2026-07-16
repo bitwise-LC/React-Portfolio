@@ -2,6 +2,8 @@ import Header from "../components/Header"
 import github from '../assets/github.txt?raw'
 import Info from '../components/Info'
 
+import GlobeCanvas from "../components/GlobeCanvas"
+
 function Contact() {
     return (
         <>
@@ -33,7 +35,7 @@ function Contact() {
             </article>
 
             <article className="border" id="contact-globe">
-
+                <GlobeCanvas color="#00ff00"/>
             </article>
 
             <article className="border" id="contact-info">
