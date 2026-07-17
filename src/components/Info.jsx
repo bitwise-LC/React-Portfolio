@@ -6,9 +6,9 @@ function Info() {
         Name: Luca <br />
         Role: Full Stack Developer <br />
         Location: Belo Horizonte, Brazil <br />
-        Email: <a href="">luca@email.com</a> <br />
-        LinkedIn: <a href="">linkedin.com/in/luca</a> <br />
-        GitHub: <a  href="">github.com/luca</a> <br />
+        Email: <a href="#">lucaneville07@gmail.com</a> <br />
+        LinkedIn: <a href="https://www.linkedin.com/in/luca-neville/">Luca Neville</a> <br />
+        GitHub: <a  href="https://github.com/bitwise-LC">bitwise-LC</a> <br />
     </p>
     )
 }

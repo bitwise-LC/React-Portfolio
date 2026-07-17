@@ -7,7 +7,7 @@ function About() {
         <Header title="About" />
 
         <section id="about-content">
-            <div>
+            <div className="duotone">
                 <img src={pfp}/>
             </div>
 
