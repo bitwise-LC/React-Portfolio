@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function useMatrix(canvasRef, color = "#ffaa00") {
+function useMatrix(canvasRef, color = "#ffffff") {
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
