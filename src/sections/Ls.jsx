@@ -1,4 +1,4 @@
-function Help() {
+function Ls() {
     return (
         <nav>
             <button>[Home]</button>
@@ -12,4 +12,4 @@ function Help() {
     )
 }
 
-export default Help
+export default Ls

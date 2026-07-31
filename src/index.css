@@ -1,6 +1,6 @@
 :root {
     --primary: #ff7b00d2;
-    --secondary: #0000ff;
+    --secondary: #009dff;
     --background: #000000;
 }
 
@@ -42,6 +42,16 @@ top: -1.65rem;
 translate: 50%; */
 left: 10px;
 transition: 0.3s;}
+
+
+
+
+
+/* ---------------------------------- Login ---------------------------------- */
+
+
+
+
 
 #index-text {color: black;
 background-color: var(--primary);
@@ -260,13 +270,11 @@ cursor:pointer;
 text-decoration: none;
 transition: .1s;}
 
-.skill-header:hover{color: var(--secondary);}
-
 .skill-content{max-height:0;
 overflow:hidden;
-transition:max-height .35s ease;}
+transition: max-height 1s ease;}
 
-.skill-box.open .skill-content{max-height:300px;}
+.skill-box.open .skill-content{max-height:200px;}
 
 .skill-item{padding: .25rem 2.5rem;
 background-color: var(--background);
