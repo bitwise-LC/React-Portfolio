@@ -104,14 +104,14 @@ function Terminal() {
       return (
     <div
       onClick={focusInput}
-      className="bg-black text-green-400 font-mono text-sm rounded-lg p-4 h-96 overflow-y-auto"
+      className="terminal border"
     >
       {/* Already-submitted lines: rendered as static, non-interactive text */}
       {history.map((entry) => (
-        <div key={entry.id} className="mb-1">
+        <div key={entry.id}>
           {entry.command !== "" && (
-            <div>
-              <span className="text-blue-400">guest@portfolio:~$</span>{" "}
+            <div className="terminal-command">
+              <span>guest@portfolio:~$</span>{" "}
               <span>{entry.command}</span>
             </div>
           )}
@@ -120,8 +120,8 @@ function Terminal() {
       ))}
  
       {/* The one live, editable line - always the newest line on screen */}
-      <div className="flex">
-        <span className="text-blue-400 mr-2">guest@portfolio:~$</span>
+      <div className="terminal-command">
+        <span>guest@portfolio:~$</span>
         <input
           ref={inputRef}
           autoFocus
@@ -129,7 +129,6 @@ function Terminal() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           spellCheck={false}
-          className="bg-transparent outline-none flex-1 text-green-400 caret-green-400"
         />
       </div>
       <div ref={bottomRef} />
