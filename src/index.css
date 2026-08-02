@@ -31,6 +31,10 @@ img {width: 100%;}
 hr {color: var(--primary);
 margin-top: 5px;}
 
+input {background-color: transparent;
+border: none;
+outline: none;}
+
 .border {border: 2px solid var(--primary);
 outline: 2px solid var(--primary);
 outline-offset: 6px;}
@@ -113,20 +117,13 @@ padding: 10px;
 color: var(--primary);
 overflow-y: scroll;}
 
-#terminal-output>* {font-size: 1.5rem;
-margin:5px 0;}
-
-#terminal-output{overflow-y:auto;
-height:100%;}
-
-.line{display:flex;
-align-items:center;
-margin:4px 0;}
-
-.terminal-command { margin-bottom: 10px;}
-
 .submitted>* {color: var(--primary);
 font-size: var(--command);}
+
+.editable>* {font-size: var(--command);}
+
+.command-input {color: var(--primary);
+padding-left: 10px;}
 
 
 

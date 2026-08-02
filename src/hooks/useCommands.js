@@ -1,72 +1,72 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useCallback } from "react";
+import useCommandHistory from "./useCommandHistory";
+import useTypewriter from "./useTypewriter";
+import { buildCommandRegistry } from "../commands/Registry";
 
-function useCommands() {
-    
-          const commands = useRef(buildCommandRegistry()).current;
-     
-      // `history` holds every line that has ALREADY been submitted.
-      // Each entry is: { id, command, output }
-      // Because we only ever *append* to this array (or wipe it on "clear"),
-      // nothing that's already in history can be mutated after the fact.
-      const [history, setHistory] = useState([]);
-     
-      // `input` is the ONLY editable piece of state - the current, not-yet-submitted line.
-      const [input, setInput] = useState("");
-     
-      const bottomRef = useRef(null);
-      const inputRef = useRef(null);
-     
-      // Auto-scroll to the newest line whenever history changes.
-      useEffect(() => {
-        bottomRef.current?.scrollIntoView({ block: "end" });
-      }, [history]);
-     
-      // Keep focus on the input no matter where the user clicks inside the terminal,
-      // so it always feels like a real terminal window.
-      const focusInput = () => inputRef.current?.focus();
-     
-      function handleKeyDown(e) {
-        if (e.key !== "Enter") return;
-     
-        const trimmed = input.trim();
-     
-        // Pressing Enter on an empty line just drops to a new line,
-        // exactly like a real shell - it does NOT get added as a "command" entry,
-        // but we still want a visual blank line, so we push an empty-output entry.
-        if (trimmed === "") {
-          setHistory((prev) => [
-            ...prev,
-            { id: crypto.randomUUID(), command: "", output: null },
-          ]);
-          setInput("");
-          return;
-        }
-     
-        // "clear" wipes the whole terminal instead of appending anything.
-        if (trimmed.toLowerCase() === "clear") {
-          setHistory([]);
-          setInput("");
-          return;
-        }
-     
-        // Look up the command. Unknown commands get an inline error output.
-        const key = trimmed.toLowerCase();
-        const renderOutput = commands[key];
-        const output = renderOutput
-          ? renderOutput()
-          : (
-            <p className="pl-2 text-red-400">
-              command not found: {trimmed}
-            </p>
-          );
-     
-        // Freeze this line into history. Because this is a *new* object appended
-        // to the array (not an edit of an existing one), previously rendered
-        // lines are never touched again.
-        setHistory((prev) => [
-          ...prev,
-          { id: crypto.randomUUID(), command: trimmed, output },
-        ]);
-        setInput("");
-      }
+const EMPTY_COMMAND = "";
+const CLEAR_COMMAND = "clear";
+
+/**
+ * The terminal's "engine": owns command parsing/execution and wires together
+ * useCommandHistory (data) + useTypewriter (animation) + the command
+ * registry (content). Terminal.jsx just renders whatever this returns.
+ */
+export default function useTerminalCommands() {
+  const { history, appendLine, clearHistory } = useCommandHistory();
+
+  // Built lazily, exactly once - avoids rebuilding the registry (and its JSX
+  // factory functions) on every render.
+  const commandsRef = useRef(null);
+
+  // Shared "submit" logic - used for both a real Enter keypress and for the
+  // typewriter once it finishes animating a command selected from "ls".
+  const runCommand = useCallback((rawText) => {
+    const trimmed = rawText.trim();
+
+    if (trimmed === EMPTY_COMMAND) {
+      appendLine(EMPTY_COMMAND, null);
+      return;
+    }
+
+    if (trimmed.toLowerCase() === CLEAR_COMMAND) {
+      clearHistory();
+      return;
+    }
+
+    const key = trimmed.toLowerCase();
+    const renderOutput = commandsRef.current[key];
+    const output = renderOutput
+      ? renderOutput()
+      : React.createElement(
+  "p",
+  `command not found: ${trimmed}`
+);
+
+    appendLine(trimmed, output);
+  }, [appendLine, clearHistory]);
+
+  const {
+    value: input,
+    setValue: setInput,
+    isTyping,
+    isTypingRef,
+    type: typeAndRun,
+  } = useTypewriter({ onComplete: runCommand });
+
+  if (!commandsRef.current) {
+    commandsRef.current = buildCommandRegistry(typeAndRun);
+  }
+
+  const handleKeyDown = useCallback((e) => {
+    if (e.key !== "Enter" || isTypingRef.current) return;
+    runCommand(input);
+    setInput("");
+  }, [input, isTypingRef, runCommand, setInput]);
+
+  const handleChange = useCallback(
+    (e) => setInput(e.target.value),
+    [setInput]
+  );
+
+  return { history, input, isTyping, handleKeyDown, handleChange };
 }

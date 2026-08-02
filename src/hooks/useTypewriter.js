@@ -1,43 +1,58 @@
-import { useEffect, useState, useMemo } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
-function useTypewriter(text, speed, delay = 0) {
+const DEFAULT_SPEED_MS = 45; // delay between characters
+const DEFAULT_PAUSE_MS = 300; // beat after typing finishes, before onComplete fires
 
-    const [index, setIndex] = useState(0);
+/**
+ * Types a string into a controlled value one character at a time, then calls
+ * onComplete(text) once fully typed and resets back to an empty value.
+ *
+ * Knows nothing about "commands" or "terminals" - it's a pure typing-effect
+ * primitive that could animate any text field.
+ */
+export default function useTypewriter({
+  onComplete,
+  speed = DEFAULT_SPEED_MS,
+  pauseBeforeComplete = DEFAULT_PAUSE_MS,
+} = {}) {
+  const [value, setValue] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
-    const displayText = useMemo(
-        () => text.slice(0, index),
-        [text, index]
-    );
+  // Mirrors `isTyping` so long-lived closures (e.g. a command registry built
+  // once via useRef) always read the CURRENT typing state instead of a
+  // stale, first-render snapshot.
+  const isTypingRef = useRef(false);
+  const timerRef = useRef(null);
 
-    useEffect(() => {
-        setIndex(0);
-        const delayId = setTimeout(() => {
+  useEffect(() => () => clearInterval(timerRef.current), []);
 
-            const timeoutId = setInterval(() => {
+  const setTypingState = useCallback((typing) => {
+    isTypingRef.current = typing;
+    setIsTyping(typing);
+  }, []);
 
-                setIndex(i => {
+  const type = useCallback((text) => {
+    if (isTypingRef.current) return; // ignore overlapping animation requests
 
-                    if (i >= text.length) {
-                        clearInterval(timeoutId);
-                        return i;
-                    }
+    setTypingState(true);
+    setValue("");
 
-                    return i + 1;
-                });
+    let charIndex = 0;
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      charIndex += 1;
+      setValue(text.slice(0, charIndex));
 
-            }, speed);
+      if (charIndex >= text.length) {
+        clearInterval(timerRef.current);
+        setTimeout(() => {
+          onComplete?.(text);
+          setValue("");
+          setTypingState(false);
+        }, pauseBeforeComplete);
+      }
+    }, speed);
+  }, [onComplete, pauseBeforeComplete, setTypingState, speed]);
 
-        }, delay);
-
-
-        return () => {
-            clearTimeout(delayId);
-        };
-
-    }, [text, speed, delay]);
-
-
-    return displayText;
+  return { value, setValue, isTyping, isTypingRef, type };
 }
-
-export default useTypewriter;

@@ -1,6 +1,6 @@
 function Info() {
     return ( 
-    <p id="info">
+    <article>
         Luca@linux <br />
         ------------ <br />
         Name: Luca <br />
@@ -14,7 +14,7 @@ function Info() {
             <div id="cube-2"></div>
             <div id="cube-3"></div>
         </nav>
-    </p>
+    </article>
     )
 }
 
