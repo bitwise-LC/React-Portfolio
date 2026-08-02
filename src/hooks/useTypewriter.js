@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 
-const DEFAULT_SPEED_MS = 45; // delay between characters
+const DEFAULT_SPEED_MS = 60; // delay between characters
 const DEFAULT_PAUSE_MS = 300; // beat after typing finishes, before onComplete fires
 
 /**

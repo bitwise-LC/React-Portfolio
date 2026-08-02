@@ -1,6 +1,6 @@
 function Info() {
     return ( 
-    <article>
+    <article id="info">
         Luca@linux <br />
         ------------ <br />
         Name: Luca <br />

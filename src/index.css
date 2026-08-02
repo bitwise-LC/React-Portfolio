@@ -117,6 +117,8 @@ padding: 10px;
 color: var(--primary);
 overflow-y: scroll;}
 
+.terminal>* {font-size: var(--command);}
+
 .submitted>* {color: var(--primary);
 font-size: var(--command);}
 

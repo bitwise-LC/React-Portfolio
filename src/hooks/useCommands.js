@@ -1,4 +1,4 @@
-import { useRef, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import useCommandHistory from "./useCommandHistory";
 import useTypewriter from "./useTypewriter";
 import { buildCommandRegistry } from "../commands/Registry";
@@ -24,7 +24,7 @@ export default function useTerminalCommands() {
     const trimmed = rawText.trim();
 
     if (trimmed === EMPTY_COMMAND) {
-      appendLine(EMPTY_COMMAND, null);
+      appendLine(EMPTY_COMMAND, null);   // <- must actually push a blank entry
       return;
     }
 
@@ -35,15 +35,14 @@ export default function useTerminalCommands() {
 
     const key = trimmed.toLowerCase();
     const renderOutput = commandsRef.current[key];
-    const output = renderOutput
-      ? renderOutput()
-      : React.createElement(
-  "p",
-  `command not found: ${trimmed}`
-);
-
-    appendLine(trimmed, output);
-  }, [appendLine, clearHistory]);
+    const output = renderOutput ? renderOutput() : React.createElement(
+      "p",
+      { className: "pl-2 text-red-400" },
+      `command not found: ${trimmed}`
+    );
+    
+    appendLine(trimmed, output); 
+  }, [appendLine, clearHistory])
 
   const {
     value: input,
