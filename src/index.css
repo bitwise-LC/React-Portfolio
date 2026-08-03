@@ -52,6 +52,23 @@ transition: 0.3s;}
 
 
 
+/* ---------------------------------- Scroll ---------------------------------- */
+
+
+
+
+
+::-webkit-scrollbar {width: 15px;
+padding: 10px 0;}
+  
+::-webkit-scrollbar-track {background: var(--background);}
+  
+::-webkit-scrollbar-thumb {background: var(--primary);}
+
+
+
+
+
 /* ---------------------------------- Login ---------------------------------- */
 
 
