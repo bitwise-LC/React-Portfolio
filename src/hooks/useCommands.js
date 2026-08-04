@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import useCommandHistory from "./useCommandHistory";
 import useTypewriter from "./useTypewriter";
 import { buildCommandRegistry } from "../commands/Registry";

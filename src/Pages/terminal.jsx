@@ -14,7 +14,7 @@ function Terminal() {
   const focusInput = () => inputRef.current?.focus();
 
   return (
-    <div onClick={focusInput} className="terminal border">
+    <div className="terminal border">
       {/* Already-submitted lines: static, non-interactive, never re-edited */}
       {history.map(({ id, command, output }) => (
         <div key={id}>
