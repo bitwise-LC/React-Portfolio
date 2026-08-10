@@ -20,7 +20,7 @@ function Terminal() {
         <div key={id}>
           {command !== "" && (
             <div className="submitted">
-              <span>guest@portfolio:~$</span>{" "}
+              <span>[Luca@linux ~]$</span>{" "}
               <span>{command}</span>
             </div>
           )}
@@ -30,7 +30,7 @@ function Terminal() {
 
       {/* The one live, editable line - always the newest line on screen */}
       <div className="editable">
-        <span>guest@portfolio:~$</span>
+        <span>[Luca@linux ~]$</span>
         <input
           className="command-input"
           ref={inputRef}
