@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+// Redundant Hook ----------------
+
 /**
  * Returns a ref to attach to a sentinel element at the bottom of a scroll
  * container. Scrolls it into view whenever any value in `deps` changes.

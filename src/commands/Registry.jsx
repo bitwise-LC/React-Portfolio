@@ -24,6 +24,15 @@ export function buildCommandRegistry(onSelectCommand) {
     skills: () => <Skills />,
     experience: () => <Experience />,
     contact: () => <Contact />,
+    all: () => (
+      <>
+        <About />
+        <Projects />
+        <Skills />
+        <Experience />
+        <Contact />
+      </>
+    ),
   };
   return registry;
 }
