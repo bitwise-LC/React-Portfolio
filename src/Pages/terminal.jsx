@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import useTerminalCommands from "../hooks/useCommands";
-import useAutoScroll from "../hooks/useAutoScroll";
 
 /**
  * Purely presentational: all command parsing, history, and typing-animation
@@ -8,7 +7,6 @@ import useAutoScroll from "../hooks/useAutoScroll";
  */
 function Terminal() {
   const { history, input, isTyping, handleKeyDown, handleChange } = useTerminalCommands();
-  const bottomRef = useAutoScroll([history]);
   const inputRef = useRef(null);
 
   const focusInput = () => inputRef.current?.focus();
@@ -43,7 +41,7 @@ function Terminal() {
         />
         {isTyping && <span className="cursor-blink" aria-hidden="true" />}
       </div>
-      <div ref={bottomRef} />
+      <div/>
     </div>
   );
 }

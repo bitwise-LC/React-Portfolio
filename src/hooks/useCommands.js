@@ -2,6 +2,8 @@ import React, { useRef, useCallback, useEffect } from "react";
 import useCommandHistory from "./useCommandHistory";
 import useTypewriter from "./useTypewriter";
 import { buildCommandRegistry } from "../commands/Registry";
+import useAutoScroll from "../hooks/useAutoScroll";
+
 
 const EMPTY_COMMAND = "";
 const CLEAR_COMMAND = "clear";
@@ -78,6 +80,7 @@ export default function useTerminalCommands() {
     console.log("running command:", JSON.stringify(input));
     runCommand(input);
     setInput("");
+    useAutoScroll([history]);
   }, [input, isTypingRef, runCommand, setInput]);
 
   const handleChange = useCallback(

@@ -17,13 +17,6 @@ import Contact from "../sections/Contact";
 
 export function buildCommandRegistry(onSelectCommand) {
   const registry = {
-    home: () => <Home />,
-    ls: () => <Ls commands={registry} onSelectCommand={onSelectCommand} />,
-    about: () => <About />,
-    projects: () => <Projects />,
-    skills: () => <Skills />,
-    experience: () => <Experience />,
-    contact: () => <Contact />,
     all: () => (
       <>
         <About />
@@ -33,6 +26,13 @@ export function buildCommandRegistry(onSelectCommand) {
         <Contact />
       </>
     ),
+    home: () => <Home />,
+    ls: () => <Ls commands={registry} onSelectCommand={onSelectCommand} />,
+    about: () => <About />,
+    projects: () => <Projects />,
+    skills: () => <Skills />,
+    experience: () => <Experience />,
+    contact: () => <Contact />,
   };
   return registry;
 }
