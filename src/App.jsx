@@ -12,7 +12,7 @@ function App() {
     return (
         <>
             <canvas ref={canvasRef} id="canvas"></canvas>
-            <Terminal />
+            <Login />
             <section id="index-info">
                 <p>IP: 127.0.0.1</p>
             </section>

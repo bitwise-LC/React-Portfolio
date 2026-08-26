@@ -1,4 +1,4 @@
-import useTypewriter from "../hooks/useTypewriter";
+import useTypedText from "../hooks/useTypedText";
 
 function Login() {
 
@@ -6,9 +6,9 @@ function Login() {
     const password = "***********";
     const speed = 70;
 
-    const loginText = useTypewriter(login, speed);
+    const loginText = useTypedText(login, speed);
 
-    const passwordText = useTypewriter(
+    const passwordText = useTypedText(
         password,
         speed,
         login.length * speed + 400
