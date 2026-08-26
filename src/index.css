@@ -1,5 +1,5 @@
 :root {
-    --primary: #ff7b00d2;
+    --primary: #ff7b00;
     --secondary: #009dff;
     --background: #000000;
     --command: 1.5rem;
@@ -85,7 +85,8 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 outline: 2px solid var(--primary);
-outline-offset: 4px;}
+outline-offset: 4px;
+z-index: 99;}
 
 #index-text>button {display: block;
 color: var(--primary);

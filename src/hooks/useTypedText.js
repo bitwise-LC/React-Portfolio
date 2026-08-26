@@ -3,18 +3,26 @@ import { useState, useEffect } from "react";
 const DEFAULT_SPEED_MS = 50;
 
 /**
- * Types `text` out automatically, starting after `startDelay` ms, and
- * returns the progressively-revealed string for direct use in JSX.
+ * Types `text` out one character at a time, but only once `enabled` is
+ * true - useful for "don't start until the user does something" flows.
+ * Starts (or restarts) from scratch whenever `enabled` flips true.
  *
- * Unlike useTypewriter (which is a manually-triggered animation used by the
- * terminal's command engine), this one is a passive display effect: give it
- * text, get back a string that grows over time.
+ * Returns { text, isDone } - the progressively-revealed string for direct
+ * use in JSX, plus a flag that flips to true once fully typed.
  */
-function useTypedText(text, speed = DEFAULT_SPEED_MS, startDelay = 0) {
+export default function useTypedText(
+  text,
+  speed = DEFAULT_SPEED_MS,
+  { startDelay = 0, enabled = true } = {}
+) {
   const [displayedText, setDisplayedText] = useState("");
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     setDisplayedText("");
+    setIsDone(false);
+
+    if (!enabled) return; // stay blank/idle until enabled
 
     let charIndex = 0;
     let intervalId;
@@ -26,6 +34,7 @@ function useTypedText(text, speed = DEFAULT_SPEED_MS, startDelay = 0) {
 
         if (charIndex >= text.length) {
           clearInterval(intervalId);
+          setIsDone(true);
         }
       }, speed);
     }, startDelay);
@@ -34,9 +43,7 @@ function useTypedText(text, speed = DEFAULT_SPEED_MS, startDelay = 0) {
       clearTimeout(startTimeoutId);
       clearInterval(intervalId);
     };
-  }, [text, speed, startDelay]);
+  }, [text, speed, startDelay, enabled]);
 
-  return displayedText;
+  return { text: displayedText, isDone };
 }
-
-export default useTypedText
