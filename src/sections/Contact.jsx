@@ -38,7 +38,7 @@ function Contact() {
 
             <article className="border" id="contact-globe">
                 <h3 className="title">Globe</h3>
-                <GlobeCanvas color="#ffaa00"/>
+                <GlobeCanvas color="#ff7b00"/>
             </article>
 
             <article className="border" id="contact-info">

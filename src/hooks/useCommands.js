@@ -6,6 +6,7 @@ import useAutoScroll from "../hooks/useAutoScroll";
 
 
 const EMPTY_COMMAND = "";
+const LOGOUT_COMMAND = "logout";
 const CLEAR_COMMAND = "clear";
 
 /**
@@ -35,13 +36,18 @@ export default function useTerminalCommands() {
       return;
     }
 
+    if(trimmed.toLowerCase() === LOGOUT_COMMAND) {
+      
+      return
+    }
+
     const key = trimmed.toLowerCase();
     const renderOutput = commandsRef.current[key];
     const output = renderOutput
       ? renderOutput()
       : React.createElement(
           "p",
-          { className: "pl-2 text-red-400" },
+          {},
           `command not found: ${trimmed}`
         );
 

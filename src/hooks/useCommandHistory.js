@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import Home from "../sections/Home";
 
 /**
  * Owns the list of already-submitted terminal lines.
