@@ -1,0 +1,5 @@
+color swap - svg swap
+Tab name changes on swap
+en/pt
+slowly shows page
+focused on typing when ls clicked
