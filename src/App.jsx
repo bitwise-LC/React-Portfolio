@@ -17,7 +17,9 @@ function App() {
             {screen === "login" && (
                 <Login onEnter={() => setScreen("terminal")} />
             )}
-            {screen === "terminal" && <Terminal />}
+            {screen === "terminal" && (
+                <Terminal onLogout={() => setScreen("login")} />
+            )}
 
             <section id="index-info">
                 <p>IP: 127.0.0.1</p>

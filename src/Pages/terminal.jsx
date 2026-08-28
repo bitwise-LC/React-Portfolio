@@ -5,8 +5,8 @@ import useTerminalCommands from "../hooks/useCommands";
  * Purely presentational: all command parsing, history, and typing-animation
  * logic lives in useTerminalCommands. This component just renders it.
  */
-function Terminal() {
-  const { history, input, isTyping, handleKeyDown, handleChange } = useTerminalCommands();
+function Terminal({ onLogout }) {
+  const { history, input, isTyping, handleKeyDown, handleChange } = useTerminalCommands({ onLogout });;
   const inputRef = useRef(null);
 
   const focusInput = () => inputRef.current?.focus();

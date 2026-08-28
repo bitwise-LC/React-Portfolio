@@ -1,25 +1,27 @@
 import React, { useRef, useCallback, useEffect } from "react";
 import useCommandHistory from "./useCommandHistory";
 import useTypewriter from "./useTypewriter";
-import { buildCommandRegistry } from "../commands/Registry";
-import useAutoScroll from "../hooks/useAutoScroll";
-
+import { buildCommandRegistry } from "../commands/registry";
 
 const EMPTY_COMMAND = "";
+const CLEAR_COMMAND = "clear";
 const LOGOUT_COMMAND = "logout";
-const CLEAR_COMMAND = "clear";  
+const PAUSE_BEFORE_LOGOUT_MS = 600;
 
 /**
  * The terminal's "engine": owns command parsing/execution and wires together
  * useCommandHistory (data) + useTypewriter (animation) + the command
  * registry (content). Terminal.jsx just renders whatever this returns.
  */
-export default function useTerminalCommands() {
+export default function useTerminalCommands({ onLogout } = {}) {
   const { history, appendLine, clearHistory } = useCommandHistory();
 
   // Built lazily, exactly once - avoids rebuilding the registry (and its JSX
   // factory functions) on every render.
   const commandsRef = useRef(null);
+  const logoutTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(logoutTimeoutRef.current), []);
 
   // Shared "submit" logic - used for both a real Enter keypress and for the
   // typewriter once it finishes animating a command selected from "ls".
@@ -36,9 +38,20 @@ export default function useTerminalCommands() {
       return;
     }
 
-    if(trimmed.toLowerCase() === LOGOUT_COMMAND) {
-      
-      return
+    if (trimmed.toLowerCase() === LOGOUT_COMMAND) {
+      appendLine(
+        trimmed,
+        React.createElement(
+          "p",
+          { className: "pl-2 text-green-300" },
+          "Logging out..."
+        )
+      );
+      clearTimeout(logoutTimeoutRef.current);
+      logoutTimeoutRef.current = setTimeout(() => {
+        onLogout?.();
+      }, PAUSE_BEFORE_LOGOUT_MS);
+      return;
     }
 
     const key = trimmed.toLowerCase();
@@ -47,12 +60,12 @@ export default function useTerminalCommands() {
       ? renderOutput()
       : React.createElement(
           "p",
-          {},
+          { className: "pl-2 text-red-400" },
           `command not found: ${trimmed}`
         );
 
     appendLine(trimmed, output);
-  }, [appendLine, clearHistory]);
+  }, [appendLine, clearHistory, onLogout]);
 
   const {
     value: input,
@@ -81,10 +94,8 @@ export default function useTerminalCommands() {
 
   const handleKeyDown = useCallback((e) => {
     if (e.key !== "Enter" || isTypingRef.current) return;
-    console.log("running command:", JSON.stringify(input));
     runCommand(input);
     setInput("");
-    useAutoScroll([history]);
   }, [input, isTypingRef, runCommand, setInput]);
 
   const handleChange = useCallback(
