@@ -7,7 +7,7 @@ import useAutoScroll from "../hooks/useAutoScroll";
 
 const EMPTY_COMMAND = "";
 const LOGOUT_COMMAND = "logout";
-const CLEAR_COMMAND = "clear";
+const CLEAR_COMMAND = "clear";  
 
 /**
  * The terminal's "engine": owns command parsing/execution and wires together
@@ -80,8 +80,6 @@ export default function useTerminalCommands() {
   }, []);
 
   const handleKeyDown = useCallback((e) => {
-    // TEMP DEBUG - remove once things work:
-    console.log("keydown fired:", e.key, "| isTyping:", isTypingRef.current, "| input:", JSON.stringify(input));
     if (e.key !== "Enter" || isTypingRef.current) return;
     console.log("running command:", JSON.stringify(input));
     runCommand(input);
