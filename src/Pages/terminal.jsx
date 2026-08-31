@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import useTerminalCommands from "../hooks/useCommands";
+import useTerminalCommands from "../hooks/useCommands"; 
 
 /**
  * Purely presentational: all command parsing, history, and typing-animation

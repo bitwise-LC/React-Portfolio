@@ -46,7 +46,7 @@ function Skills() {
                         {category.title}
                     </button>
 
-                    <hr />
+                    <div className="hr"></div>
 
                     <div className="skill-content">
 

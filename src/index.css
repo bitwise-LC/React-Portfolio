@@ -28,7 +28,10 @@ a {color: var(--secondary);}
 
 img {width: 100%;}
 
-hr {color: var(--primary);
+.hr {height: 2px;
+width: 100%;
+color: var(--primary);
+background-color: var(--primary);
 margin-top: 5px;}
 
 input {background-color: transparent;
